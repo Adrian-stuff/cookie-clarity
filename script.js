@@ -29,8 +29,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`;
 
-    // **Crucial:** Construct the prompt to request JSON output
-    // Prepare cookie data for the prompt (limit info sent if needed)
     const promptCookieData = cookiesInfo.map((c) => ({
       name: c.name,
       domain: c.domain,
@@ -55,13 +53,11 @@ ${JSON.stringify(promptCookieData)}
         },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          // Safety settings can remain if desired
-          // generationConfig: { maxOutputTokens: 1024 } // Adjust if needed
         }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({})); // Try to get error details
+        const errorData = await response.json().catch(() => ({}));
         console.error("Gemini API Error Response:", errorData);
         throw new Error(
           `API Error ${response.status}: ${
@@ -73,17 +69,15 @@ ${JSON.stringify(promptCookieData)}
       }
 
       const data = await response.json();
-      console.log("Received response from Gemini:", data); // For debugging
+      console.log("Received response from Gemini:", data);
 
-      // **Crucial:** Extract and parse the JSON response from the text part
       const responseText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!responseText) {
         throw new Error("No explanation text received from API.");
       }
 
-      // Attempt to parse the text as JSON
+      //  parse the text as JSON
       try {
-        // Sometimes the API might wrap the JSON in backticks or 'json' tag
         const cleanJsonString = responseText
           .trim()
           .replace(/^```json\s*/, "")
@@ -95,8 +89,8 @@ ${JSON.stringify(promptCookieData)}
         overallStatus.textContent = `Received explanations.`;
         setTimeout(() => {
           overallStatus.style.display = "none";
-        }, 2500); // Hide status after a bit
-        return explanations; // Return the parsed object map { cookieName: explanation, ... }
+        }, 2500);
+        return explanations;
       } catch (parseError) {
         console.error(
           "Failed to parse JSON response:",
@@ -111,9 +105,8 @@ ${JSON.stringify(promptCookieData)}
     } catch (error) {
       console.error("Error fetching batch explanations:", error);
       overallStatus.textContent = `Error: ${error.message}`;
-      overallStatus.style.color = "red"; // Keep error visible
-      // We don't throw here, allow UI to show individual errors
-      return null; // Indicate failure
+      overallStatus.style.color = "red";
+      return null;
     }
   }
 
@@ -121,7 +114,7 @@ ${JSON.stringify(promptCookieData)}
   apiKey = await getApiKey();
 
   if (!apiKey) {
-    cookieList.innerHTML = ""; // Clear loading
+    cookieList.innerHTML = "";
     messageArea.innerHTML = `<div class="api-key-prompt">Gemini API Key not found. Please set it in the <a href="${chrome.runtime.getURL(
       "options.html"
     )}" target="_blank">extension options</a>.</div>`;
