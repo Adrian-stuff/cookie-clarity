@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Current Site Cookies</title>
+  <style>
+    /* (Keep previous styles from version 1.1) */
+    body {
+      font-family: sans-serif;
+      min-width: 350px;
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+      word-wrap: break-word;
+    }
+
+    li strong {
+      display: inline-block;
+      min-width: 50px;
+      font-size: 1.05em;
+    }
+
+    .cookie-value {
+      margin-left: 5px;
+      font-style: italic;
+      color: #333;
+    }
+
+    .explanation {
+      display: block;
+      margin-left: 10px;
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .explanation.loading {
+      /* Style for placeholder before results arrive */
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .explanation.error {
+      color: #c00;
+      font-style: italic;
+    }
+
+    .no-cookies,
+    .error-message,
+    .api-key-prompt {
+      color: #888;
+      padding: 10px 0;
+    }
+
+    .api-key-prompt a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .api-key-prompt a:hover {
+      text-decoration: underline;
+    }
+
+    #overallStatus {
+      /* For showing batch status */
+      font-style: italic;
+      color: #666;
+      margin-bottom: 10px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border-radius: 3px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Cookies & Explanations:</h3>
+  <div id="messageArea"></div>
+  <div id="overallStatus" style="display: none;"></div>
+  <ul id="cookieList">
+    <li>Loading cookies...</li>
+  </ul>
+  <script src="script.js"></script>
+</body>
+
+</html>

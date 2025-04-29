@@ -1,0 +1,14 @@
+{
+  "name": "Cookie Clarity",
+  "description": "A Chrome extension to explain each cookie tracked by a website.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "cookie.png"
+  },
+
+  "permissions": ["cookies", "activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "options_page": "options.html"
+}
